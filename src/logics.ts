@@ -1,7 +1,8 @@
 import { Request,Response } from "express"
-import { QueryResult } from "pg";
+import { QueryConfig, QueryResult } from "pg";
 import format from "pg-format";
 import { client } from "./database";
+import { movieResult } from "./interface";
 
 
 const create = async (req: Request ,res:Response): Promise<Response> =>{
@@ -23,26 +24,25 @@ const create = async (req: Request ,res:Response): Promise<Response> =>{
 }
 
 const read = async (req: Request, res: Response): Promise<Response> => {
-    const { category } = req.query;
+    const {category} = req.query;
 
-    if (category === undefined) {
-        const queryStringAll: string = `
-            SELECT * FROM movies;
-        `;
-
-        const queryResultAll: QueryResult = await client.query(queryStringAll);
-
-        return res.status(200).json(queryResultAll.rows);
-    }
-
-    const queryStringCategory: string = `
+    const queryConfig: QueryConfig = {
+        text:`
         SELECT * FROM movies
         WHERE category = $1;
-    `;
+         `,
 
-    const queryResultCategory: QueryResult = await client.query(queryStringCategory, [category]);
+         values:[category]
+    }
 
-    return res.status(200).json(queryResultCategory.rows);
+    let result: movieResult = await client.query(queryConfig);
+
+    if(!result.rowCount){
+             result = await client.query(`SELECT * FROM movies;`)
+    }
+
+    return res.status(200).json(result.rows);  
+    
 };
     const update = async (req: Request ,res:Response): Promise<Response> => {
         const queryString: string = format(

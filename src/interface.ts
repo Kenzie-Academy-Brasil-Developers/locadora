@@ -1,3 +1,5 @@
+import { QueryResult } from "pg";
+
 type movie ={
 id:number;
 name:string;
@@ -6,4 +8,6 @@ duration:number;
 price:number;
 };
 
-export {movie}
+
+type movieResult = QueryResult<movie>
+export {movie, movieResult}
