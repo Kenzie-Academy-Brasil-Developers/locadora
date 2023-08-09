@@ -8,6 +8,5 @@ duration:number;
 price:number;
 };
 
-
 type movieResult = QueryResult<movie>
 export {movie, movieResult}

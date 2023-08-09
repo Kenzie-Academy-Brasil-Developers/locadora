@@ -17,5 +17,4 @@ app.delete("/movies/:id",idExists, logics.deleteMovie)
 const PORT: number = 3000
 app.listen(PORT, async(): Promise<void> => {
     await startDatabase()
-    console.log(`rodando na port ${PORT}`)
 })

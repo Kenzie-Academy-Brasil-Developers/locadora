@@ -1,7 +1,5 @@
 import { Client } from "pg";
 
-console.log(process.env)
-
 const client = new Client({
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,

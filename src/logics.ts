@@ -58,16 +58,12 @@ const read = async (req: Request, res: Response): Promise<Response> => {
 
         const queryResult: QueryResult = await client.query(queryString,[req.params.id,
         ]);
-        
         return res.status(200).json(queryResult.rows[0])
     }
 
     const retrieveMovie = async ( req: Request, res: Response ): Promise<Response> => {
         const { foundMovie } = res.locals;
-      
-      
         return res.status(200).json(foundMovie);
-
       };
 
     const deleteMovie = async (req: Request ,res:Response): Promise<Response> => {

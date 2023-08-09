@@ -17,7 +17,6 @@ const idExists = async (req:Request, res:Response,next: NextFunction):Promise<vo
     }
 
     res.locals = { ...res.locals, foundMovie: queryResult.rows[0] };
-
     return next();
 };
 
